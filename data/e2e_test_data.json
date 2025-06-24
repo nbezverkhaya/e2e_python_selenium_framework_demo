@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "user_email" : "rahulshettyacademy",
+      "user_password" : "learning",
+      "product_name" : "Blackberry"
+    },
+
+    {
+      "user_email" : "rahulshettyacademy",
+      "user_password" : "learning",
+      "product_name" : "iphone X"
+    }
+
+  ]
+
+}
