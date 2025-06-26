@@ -1,8 +1,11 @@
 from selenium.webdriver.common.by import By
 from pageObjects.checkout_confirmation_page import CheckoutConfirmation
+from utils.browser_utils import BrowserUtils
 
-class ShopPage:
+
+class ShopPage(BrowserUtils):
     def __init__(self, driver):
+        super().__init__(driver)
         self.driver = driver
         self.shop_link = (By.CSS_SELECTOR, "a[href*='shop']")
         self.all_products = (By.XPATH, "//div[@class='card h-100']")

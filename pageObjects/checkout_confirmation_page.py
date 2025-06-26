@@ -2,8 +2,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-class CheckoutConfirmation:
+from utils.browser_utils import BrowserUtils
+
+
+class CheckoutConfirmation(BrowserUtils):
     def __init__(self, driver):
+        super().__init__(driver)
         self.driver = driver
         self.checkout_btn = (By.XPATH, "//button[@class='btn btn-success']")
         self.country_input = (By.XPATH, "//input[@id='country']")
@@ -25,7 +29,7 @@ class CheckoutConfirmation:
 
     def validate_order(self):
         success_text = self.driver.find_element(*self.success_message).text
-        assert "Thank you! Your order will be delivered in next few weeks :-)." in success_text
+        assert "bThank you! Your order will be delivered in next few weeks :-)." in success_text
 
 
 
