@@ -29,7 +29,8 @@ class CheckoutConfirmation(BrowserUtils):
 
     def validate_order(self):
         success_text = self.driver.find_element(*self.success_message).text
-        assert "bThank you! Your order will be delivered in next few weeks :-)." in success_text
+        print(success_text)
+        assert "Thank you! Your order will be delivered in next few weeks :-)." in success_text
 
 
 

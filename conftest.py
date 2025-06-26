@@ -1,13 +1,14 @@
 import os.path
-
 import pytest
 from pytest_html.extras import extra
-
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
 
 driver = None
 
@@ -15,21 +16,34 @@ def pytest_addoption(parser):
     parser.addoption(
         "--browser_name", action="store", default="edge", help="browser selection"
     )
-options = Options()
-options.add_argument("--incognito")
+chrome_options = ChromeOptions()
+chrome_options.add_argument("--incognito")
+
+firefox_options = FirefoxOptions()
+firefox_options.add_argument("-private")  # Firefox incognito mode
 
 @pytest.fixture(scope="function")
 def browser_instance(request):
     global driver
     browser_name = request.config.getoption("--browser_name")
+
     if browser_name == "chrome":
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        driver = webdriver.Chrome(
+            service=ChromeService(ChromeDriverManager().install()),
+            options=chrome_options
+        )
     elif browser_name == "edge":
         driver = webdriver.Edge(service=EdgeService("/usr/local/bin/msedgedriver"))
+    elif browser_name == "firefox":
+        driver = webdriver.Firefox(
+            service=FirefoxService(GeckoDriverManager().install()),
+            options=firefox_options
+        )
     elif browser_name == "safari":
         driver = webdriver.Safari()
     else:
         raise ValueError(f"Browser {browser_name} is not supported")
+
     driver.implicitly_wait(5)
     driver.get("https://rahulshettyacademy.com/loginpagePractise/")
     yield driver

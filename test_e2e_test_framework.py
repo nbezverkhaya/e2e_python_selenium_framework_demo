@@ -1,7 +1,7 @@
+#  pytest -n 2 -m smoke --browser_name edge --html reports/report.html
+
 import json
-
 import pytest
-
 import time
 from pageObjects.login_page import LoginPage
 test_data_path = './data/e2e_test_data.json'
@@ -18,6 +18,7 @@ def test_e2e(browser_instance, test_list_item):
     shop_page = login_page.login(test_list_item["user_email"], test_list_item["user_password"])
     shop_page.add_product_to_card(test_list_item["product_name"])
     checkout_page = shop_page.go_to_cart()
+    time.sleep(4)
     checkout_page.checkout()
     checkout_page.enter_delivery_address()
     checkout_page.validate_order()

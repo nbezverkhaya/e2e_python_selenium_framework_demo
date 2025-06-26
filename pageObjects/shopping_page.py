@@ -15,8 +15,8 @@ class ShopPage(BrowserUtils):
         self.driver.find_element(*self.shop_link).click()
         products = self.driver.find_elements(*self.all_products)
         for product in products:
-            prodName = self.driver.find_element(By.XPATH, "//div/h4/a").text
-            if prodName == product_name:
+            item_name = product.find_element(By.XPATH, ".//h4/a").text
+            if item_name == product_name:
                 product.find_element(By.XPATH, "div/button").click()
 
     def go_to_cart(self):
